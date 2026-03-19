@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Какое приложение нужно людям в 2026?</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f7f7f8;--surface:#fff;--border:#e0e0e0;--bfocus:#c0c0c0;
+  --t1:#111;--t2:#555;--t3:#999;
+  --blue:#1a6de0;--bluebg:#eaf2fd;--blued:#145bb5;
+  --green:#1a8c3e;--greenbg:#e8f5ec;
+  --red:#cc2222;--redbg:#fdeaea;
+  --r:10px;--rs:6px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t1);font-family:'Inter',-apple-system,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+.w{max-width:600px;margin:0 auto;padding:16px 14px 120px}
+
+.intro{text-align:center;padding:44px 0 28px}
+.intro-tag{display:inline-block;padding:4px 13px;background:var(--bluebg);color:var(--blue);font-size:11px;font-weight:700;border-radius:99px;letter-spacing:.6px;text-transform:uppercase;margin-bottom:14px}
+.intro h1{font-size:24px;font-weight:900;line-height:1.25;margin-bottom:8px}
+.intro p{font-size:13.5px;color:var(--t2);max-width:460px;margin:0 auto 6px}
+.intro .meta{font-size:12px;color:var(--t3);margin-top:14px}
+
+.pb{position:sticky;top:0;z-index:200;background:var(--bg);padding:10px 0 5px;display:none}
+.pb-track{height:3px;background:var(--border);border-radius:3px;overflow:hidden}
+.pb-fill{height:100%;background:var(--blue);border-radius:3px;transition:width .4s cubic-bezier(.4,0,.2,1);width:0}
+.pb-info{display:flex;justify-content:space-between;margin-top:4px;font-size:11px;color:var(--t3);font-weight:500}
+
+.sec{display:none;animation:up .25s ease}.sec.on{display:block}
+.sh{margin-bottom:18px}
+.sh-tag{font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.7px;margin-bottom:3px}
+.sh-title{font-size:18px;font-weight:800;margin-bottom:3px}
+.sh-desc{font-size:12.5px;color:var(--t2)}
+
+.q{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:10px;transition:border-color .15s}
+.q.err{border-color:var(--red)}
+.ql{font-size:13.5px;font-weight:600;margin-bottom:1px}
+.qr{color:var(--red);font-weight:700}
+.qh{font-size:11.5px;color:var(--t3);margin-bottom:8px}
+.qe{font-size:11px;color:var(--red);margin-top:4px;display:none}
+.q.err .qe{display:block}
+
+.os{display:flex;flex-direction:column;gap:5px}
+.o{display:flex;align-items:center;gap:8px;padding:8px 11px;border:1.5px solid var(--border);border-radius:var(--rs);cursor:pointer;font-size:13px;transition:all .12s;user-select:none}
+.o:hover{border-color:var(--bfocus);background:#fafafa}
+.o.on{border-color:var(--blue);background:var(--bluebg)}
+.o input{accent-color:var(--blue);flex-shrink:0;pointer-events:none}
+
+.cw{margin-top:5px}
+.ct{font-size:11.5px;color:var(--blue);cursor:pointer;font-weight:500;padding:3px 0;display:inline-block}
+.ct:hover{text-decoration:underline}
+.ci{display:none;margin-top:3px}
+.ci.show{display:block}
+
+.ti{width:100%;padding:8px 11px;border:1.5px solid var(--border);border-radius:var(--rs);font-size:13px;font-family:inherit;outline:none;resize:vertical;transition:border-color .12s;background:var(--surface)}
+.ti:focus{border-color:var(--blue)}
+textarea.ti{min-height:68px}
+
+.sc{display:flex;gap:4px;justify-content:center;flex-wrap:wrap}
+.sb{width:38px;height:38px;border:1.5px solid var(--border);border-radius:var(--rs);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;cursor:pointer;transition:all .12s;background:var(--surface)}
+.sb:hover{border-color:var(--blue)}
+.sb.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.sl{display:flex;justify-content:space-between;font-size:11px;color:var(--t3);margin-top:3px}
+
+.bts{display:flex;gap:10px;margin-top:22px}
+.btn{flex:1;padding:12px 16px;border:none;border-radius:var(--rs);font-size:13.5px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .12s}
+.bb{background:var(--surface);border:1.5px solid var(--border);color:var(--t2)}
+.bb:hover{border-color:var(--bfocus)}
+.bn{background:var(--blue);color:#fff}
+.bn:hover{background:var(--blued)}
+
+.res{display:none;animation:up .3s ease}.res.on{display:block}
+.rc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:10px}
+.rc h3{font-size:14px;font-weight:700;margin-bottom:8px}
+.rr{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:12.5px}
+.rr:last-child{border-bottom:none}
+.rk{color:var(--t2);flex:1;min-width:0}
+.rv{font-weight:600;text-align:right;flex:1;min-width:0;word-break:break-word}
+.cpb{width:100%;padding:13px;background:var(--blue);color:#fff;border:none;border-radius:var(--rs);font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;margin-top:6px;transition:all .15s}
+.cpb:hover{background:var(--blued)}
+.cpb.ok{background:var(--green)}
+
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:480px){.w{padding:10px 10px 100px}.q{padding:13px}.sb{width:33px;height:33px;font-size:12px}}
+</style>
+</head>
+<body>
+<div class="w">
+
+  <div class="intro" id="intro">
+    <div class="intro-tag">Анонимный опрос</div>
+    <h1>Какое приложение нужно людям в 2026 году?</h1>
+    <p>Мы хотим создать приложение, которое реально нужно. Помогите определить — какое именно. Все ответы анонимны.</p>
+    <div class="meta">≈ 7 минут · 30 вопросов</div>
+    <button class="btn bn" style="margin-top:22px;max-width:260px;width:100%" onclick="go(0)">Начать →</button>
+  </div>
+
+  <div class="pb" id="pb">
+    <div class="pb-track"><div class="pb-fill" id="pF"></div></div>
+    <div class="pb-info"><span id="pS"></span><span id="pP">0%</span></div>
+  </div>
+
+  <div id="M"></div>
+  <div class="res" id="R"></div>
+</div>
+
+<script>
+const D=[
+{
+  t:"О вас",d:"Базовая информация — нужна для анализа по группам",
+  q:[
+    {id:"age",l:"Ваш возраст",ty:"r",rq:1,o:["13–17 лет","18–24 года","25–34 года","35–44 года","45 и старше"]},
+    {id:"sex",l:"Пол",ty:"r",rq:1,o:["Мужской","Женский","Не хочу отвечать"]},
+    {id:"city",l:"В каком городе живёте?",ty:"t",rq:1,ph:"Название города"},
+    {id:"job",l:"Чем занимаетесь?",ty:"r",rq:1,o:["Учусь в школе","Учусь в колледже / университете","Работаю в компании","Работаю на себя (фриланс, ИП)","Веду бизнес","Сейчас не работаю и не учусь"]},
+    {id:"inc",l:"Личный доход в месяц (примерно)",ty:"r",rq:0,h:"Можно пропустить",o:["Дохода нет","До 30 000 ₽","30 000 – 70 000 ₽","70 000 – 150 000 ₽","Больше 150 000 ₽","Не хочу отвечать"]}
+  ]
+},
+{
+  t:"Ваш телефон",d:"Как вы пользуетесь смартфоном каждый день",
+  q:[
+    {id:"hrs",l:"Сколько часов в день вы проводите в телефоне?",ty:"r",rq:1,o:["Меньше 2 часов","2–4 часа","4–6 часов","6–8 часов","Больше 8 часов"]},
+    {id:"apps",l:"Какие приложения вы открываете КАЖДЫЙ день?",ty:"c",rq:1,h:"Выберите все, которые открываете ежедневно",o:["Telegram","WhatsApp","ВКонтакте","YouTube","TikTok","Instagram","Wildberries","Ozon","Авито","Банковское приложение","Яндекс Карты / Навигатор","Игры","Музыка (Яндекс, Spotify, VK)"]},
+    {id:"paid",l:"За какие приложения или подписки вы платите деньги?",ty:"c",rq:1,h:"Выберите все подходящие",o:["VPN","Музыка (Яндекс Плюс, Spotify и т.д.)","Кино и сериалы (Кинопоиск, Иви и т.д.)","Облачное хранилище (iCloud, Google One)","Донаты в играх","Ничего — пользуюсь только бесплатным"]},
+    {id:"find",l:"Откуда вы обычно узнаёте о новых приложениях?",ty:"c",rq:1,o:["Друзья или знакомые рассказали","Увидел(а) в видеоролике (YouTube, TikTok, Reels)","Попалась реклама","Увидел(а) в топе App Store или Google Play","Прочитал(а) в Telegram-канале","Наткнулся(-ась) случайно"]}
+  ]
+},
+{
+  t:"Что раздражает",d:"Что вам не нравится в приложениях, которыми пользуетесь сейчас",
+  q:[
+    {id:"ann_soc",l:"Что вас больше всего раздражает в соцсетях и мессенджерах?",ty:"c",rq:1,h:"Выберите всё, что актуально для вас",o:["Слишком много рекламы","Лента показывает то, что мне не интересно","Токсичные комментарии и хейт","Невозможно оторваться от скролла — трата времени","Приложения собирают мои данные, нет приватности","Много фейковых аккаунтов и ботов","Контент стал однообразным, ничего нового","Нет возможности зарабатывать внутри платформы","Устаревший или неудобный дизайн","Меня ничего не раздражает"]},
+    {id:"ann_buy",l:"Что раздражает, когда вы покупаете что-то в интернете?",ty:"c",rq:1,h:"Выберите всё, что актуально для вас",o:["Товар приходит не такой, как на фото","Отзывы накручены — непонятно кому верить","Хочется увидеть товар вживую, а не на картинке","Долгая доставка","Сложно найти что-то уникальное и необычное","Нет живого контакта с продавцом","Боюсь купить подделку","Процесс возврата слишком сложный","Цены завышены по сравнению с оффлайном","Меня ничего не раздражает"]},
+    {id:"ann_life",l:"Какая повседневная задача на телефоне отнимает больше всего времени или нервов?",ty:"ta",rq:1,ph:"Опишите конкретную ситуацию. Например: «каждый раз ищу нормальное место поесть и трачу 20 минут», «не могу нормально вести учёт расходов», «невозможно договориться с друзьями о встрече»..."},
+    {id:"del",l:"Из-за чего вы удаляете приложение в первый же день?",ty:"c",rq:1,h:"Выберите главные причины",o:["Сразу завалили рекламой","Нельзя ничего посмотреть без регистрации","Некрасивое или устаревшее оформление","Приложение тормозит или вылетает","Непонятно, как пользоваться","Приложение просит слишком много разрешений","Внутри пусто — нет контента и пользователей","Сразу просят оплатить подписку","Нет никого из моих знакомых"]}
+  ]
+},
+{
+  t:"Чего не хватает",d:"Самый важный раздел — расскажите, что вам реально нужно",
+  q:[
+    {id:"miss",l:"Какого приложения вам НЕ ХВАТАЕТ в жизни прямо сейчас?",ty:"ta",rq:1,ph:"Подумайте: есть ли задача, которую ни одно приложение не решает хорошо? Любая сфера: общение, покупки, учёба, здоровье, финансы, развлечения, работа, хобби..."},
+    {id:"fix",l:"Если бы вы могли изменить ОДНО приложение, которым пользуетесь — какое бы выбрали и что бы поменяли?",ty:"ta",rq:1,ph:"Например: «Телеграм — добавил бы нормальные видеозвонки на 50 человек» или «Авито — убрал бы мошенников и добавил видео товара»"},
+    {id:"why_sw",l:"Что может заставить вас скачать и начать пользоваться НОВЫМ приложением?",ty:"c",rq:1,o:["Все мои друзья уже им пользуются","Там есть функция, которой нет нигде","Красивый и удобный интерфейс","Оно бесплатное или дешевле аналогов","Оно безопасное и не собирает данные","Его порекомендовал блогер, которому доверяю","Стало модно / все об этом говорят","Я устал(а) от текущего приложения"]},
+    {id:"area",l:"В какой области жизни вам СИЛЬНЕЕ ВСЕГО не хватает хорошего приложения?",ty:"r",rq:1,o:["Общение и знакомства с новыми людьми","Покупки и продажи вещей","Развлечения и интересный контент","Обучение и развитие навыков","Деньги, финансы, бизнес-инструменты","Здоровье, спорт, привычки","Планирование дня, задачи, организация жизни","Всего хватает — не могу выбрать"]}
+  ]
+},
+{
+  t:"Оцените концепции",d:"Оцените каждую идею от 1 (совсем не интересно) до 10 (хочу прямо сейчас). Будьте честны — нам важна правда, а не вежливость.",
+  q:[
+    {id:"c1",l:"Мессенджер, в котором можно создавать несколько анонимных профилей (\"масок\") для разных кругов общения, со встроенными платежами друг другу",ty:"s",rq:1,mn:"Не нужно",mx:"Очень хочу"},
+    {id:"c2",l:"Платформа коротких видео, где можно покупать любой товар прямо из ролика — без перехода на другие сайты",ty:"s",rq:1,mn:"Не нужно",mx:"Очень хочу"},
+    {id:"c3",l:"Одно приложение, которое собирает ВСЁ в одном экране: сообщения из всех мессенджеров, банк, расписание, задачи, доставки, подписки",ty:"s",rq:1,mn:"Не нужно",mx:"Очень хочу"},
+    {id:"c4",l:"Соцсеть, где ваши реальные действия (спорт, чтение, учёба, работа) превращаются в очки опыта, уровни и достижения — как в RPG-игре",ty:"s",rq:1,mn:"Не нужно",mx:"Очень хочу"},
+    {id:"c5",l:"Приложение для вашего района: найти людей рядом с похожими интересами, узнать о мероприятиях поблизости, местные продавцы и услуги",ty:"s",rq:1,mn:"Не нужно",mx:"Очень хочу"},
+    {id:"c6",l:"Умный AI-помощник, который знает ваше расписание, привычки и финансы — сам напоминает, подсказывает и помогает планировать день",ty:"s",rq:1,mn:"Не нужно",mx:"Очень хочу"},
+    {id:"c7",l:"Приложение для покупок и продаж в прямом эфире: продавец показывает товар на камеру, покупатели делают ставки как на аукционе",ty:"s",rq:1,mn:"Не нужно",mx:"Очень хочу"},
+    {id:"c8",l:"Полностью приватная соцсеть без рекламы, без слежки, без алгоритмов — работает по подписке вместо рекламной модели",ty:"s",rq:1,mn:"Не нужно",mx:"Очень хочу"}
+  ]
+},
+{
+  t:"Покупки и деньги",d:"Как вы покупаете онлайн и за что готовы платить",
+  q:[
+    {id:"shf",l:"Как часто вы покупаете что-то в интернете?",ty:"r",rq:1,o:["Почти каждый день","Несколько раз в неделю","Примерно раз в неделю","Несколько раз в месяц","Раз в месяц или реже","Почти не покупаю онлайн"]},
+    {id:"shw",l:"Где вы чаще всего покупаете?",ty:"c",rq:1,o:["Wildberries","Ozon","Яндекс Маркет","Авито","AliExpress","В магазинах через Instagram / Telegram","В обычных магазинах (офлайн)","Напрямую у знакомых"]},
+    {id:"sha",l:"Сколько обычно стоит ваша средняя онлайн-покупка?",ty:"r",rq:1,o:["До 500 ₽","500 – 2 000 ₽","2 000 – 5 000 ₽","5 000 – 15 000 ₽","Больше 15 000 ₽"]},
+    {id:"tru",l:"Что для вас самое важное, чтобы доверять продавцу в интернете?",ty:"c",rq:1,h:"Выберите 3 самых важных пункта",o:["Настоящие отзывы от покупателей с фото","Видео товара (не только фотографии)","Высокий рейтинг продавца","Возможность задать вопрос продавцу напрямую","Известный и проверенный магазин/бренд","Деньги удерживаются, пока я не получу товар","Продавец прошёл проверку (верификация документов)"]},
+    {id:"pmax",l:"Сколько вы готовы платить за по-настоящему полезное приложение в месяц?",ty:"r",rq:1,o:["0 ₽ — пользуюсь только бесплатными","До 99 ₽ в месяц","100 – 299 ₽ в месяц","300 – 499 ₽ в месяц","500 ₽ и больше в месяц"]},
+    {id:"pfor",l:"За какие конкретно функции в приложении вы бы заплатили?",ty:"c",rq:1,o:["Полное отсутствие рекламы","Защита данных и анонимность","Доступ к эксклюзивному контенту","Красивое оформление, темы, кастомизация","Расширенные возможности (больше функций)","Приоритетная техподдержка","Ни за что — приложения должны быть бесплатными"]}
+  ]
+},
+{
+  t:"Ваши идеи",d:"Последний раздел — здесь нет правильных ответов. Пишите всё, что думаете.",
+  q:[
+    {id:"dream",l:"Опишите приложение вашей мечты. Что оно делает? Почему вы бы открывали его каждый день?",ty:"ta",rq:1,ph:"Пишите своими словами, как угодно. Даже если идея кажется странной — нам важно каждое мнение."},
+    {id:"create",l:"Представьте: у вас есть команда лучших программистов и неограниченный бюджет. Какое приложение вы бы создали?",ty:"ta",rq:1,ph:"Опишите идею: что оно делает, для кого, чем отличается от всего, что уже есть..."},
+    {id:"gap",l:"Чего, по-вашему, больше всего не хватает на российском рынке приложений?",ty:"ta",rq:1,ph:"Может быть конкретная ниша, формат, подход к дизайну, способ общения, вид контента..."},
+    {id:"end",l:"Хотите добавить что-то ещё? Любые мысли и комментарии.",ty:"ta",rq:0,ph:"Необязательно — но будем рады любому дополнению"}
+  ]
+}
+];
+
+let A={},C={},cur=-1;
+
+function init(){
+  const m=document.getElementById('M');
+  D.forEach((s,si)=>{
+    let h=`<div class="sec" id="s${si}"><div class="sh"><div class="sh-tag">Раздел ${si+1} из ${D.length}</div><div class="sh-title">${s.t}</div><div class="sh-desc">${s.d}</div></div>`;
+    s.q.forEach(q=>{h+=rQ(q)});
+    h+=`<div class="bts"><button class="btn bb" onclick="go(${si<=0?-1:si-1})">← Назад</button>`;
+    h+=si<D.length-1?`<button class="btn bn" onclick="nx(${si})">Далее →</button>`:`<button class="btn bn" onclick="fin()">Завершить ✓</button>`;
+    h+=`</div></div>`;
+    m.insertAdjacentHTML('beforeend',h);
+  });
+}
+
+function rQ(q){
+  let h=`<div class="q" id="q_${q.id}"><div class="ql">${q.l}${q.rq?' <span class="qr">*</span>':''}</div>`;
+  h+=q.h?`<div class="qh">${q.h}</div>`:'<div style="height:6px"></div>';
+  if(q.ty==='r'){
+    h+='<div class="os">';
+    q.o.forEach((o,i)=>{h+=`<label class="o" onclick="rSel('${q.id}',${i},this,event)"><input type="radio" name="${q.id}"> ${o}</label>`});
+    h+='</div>'+cust(q.id);
+  } else if(q.ty==='c'){
+    h+='<div class="os">';
+    q.o.forEach((o,i)=>{h+=`<label class="o" onclick="cSel('${q.id}',${i},this,event)"><input type="checkbox" name="${q.id}"> ${o}</label>`});
+    h+='</div>'+cust(q.id);
+  } else if(q.ty==='t'){
+    h+=`<input class="ti" placeholder="${q.ph||''}" oninput="A['${q.id}']=this.value;ec('${q.id}')">`;
+  } else if(q.ty==='ta'){
+    h+=`<textarea class="ti" placeholder="${q.ph||''}" oninput="A['${q.id}']=this.value;ec('${q.id}')"></textarea>`;
+  } else if(q.ty==='s'){
+    h+='<div class="sc">';
+    for(let i=1;i<=10;i++)h+=`<div class="sb" onclick="sSel('${q.id}',${i},this)">${i}</div>`;
+    h+=`</div><div class="sl"><span>${q.mn}</span><span>${q.mx}</span></div>`;
+  }
+  h+=`<div class="qe">Пожалуйста, ответьте на этот вопрос</div></div>`;
+  return h;
+}
+
+function cust(id){
+  return `<div class="cw"><span class="ct" onclick="tgC('${id}',this)">+ Свой вариант</span><div class="ci" id="ci_${id}"><input class="ti" placeholder="Напишите свой вариант..." oninput="C['${id}']=this.value.trim()"></div></div>`;
+}
+
+function tgC(id,el){
+  const ci=document.getElementById('ci_'+id);
+  const sh=!ci.classList.contains('show');
+  ci.classList.toggle('show',sh);
+  el.textContent=sh?'− Скрыть свой вариант':'+ Свой вариант';
+  if(!sh){C[id]='';ci.querySelector('input').value='';}
+}
+
+function rSel(id,i,el,e){
+  e.preventDefault();
+  el.closest('.os').querySelectorAll('.o').forEach(o=>o.classList.remove('on'));
+  el.classList.add('on');
+  el.querySelector('input').checked=true;
+  A[id]=fQ(id).o[i];
+  ec(id);
+}
+
+function cSel(id,i,el,e){
+  e.preventDefault();
+  const cb=el.querySelector('input');
+  cb.checked=!cb.checked;
+  el.classList.toggle('on',cb.checked);
+  const q=fQ(id);
+  A[id]=Array.from(document.querySelectorAll(`input[name="${id}"]:checked`)).map(c=>{
+    const idx=[...document.querySelectorAll(`input[name="${id}"]`)].indexOf(c);
+    return q.o[idx];
+  });
+  if(A[id].length)ec(id);
+}
+
+function sSel(id,v,el){
+  el.parentElement.querySelectorAll('.sb').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  A[id]=v;
+  ec(id);
+}
+
+function fQ(id){return D.flatMap(s=>s.q).find(q=>q.id===id)}
+function ec(id){document.getElementById('q_'+id)?.classList.remove('err')}
+
+function val(si){
+  let ok=true;
+  D[si].q.forEach(q=>{
+    if(!q.rq)return;
+    const v=A[q.id];
+    const bad=v===undefined||v===''||v===null||(Array.isArray(v)&&!v.length);
+    const el=document.getElementById('q_'+q.id);
+    if(bad){el.classList.add('err');ok=false}else{el.classList.remove('err')}
+  });
+  if(!ok)document.querySelector(`#s${si} .err`)?.scrollIntoView({behavior:'smooth',block:'center'});
+  return ok;
+}
+
+function go(si){
+  if(si<0){
+    cur=-1;
+    document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+    document.getElementById('pb').style.display='none';
+    document.getElementById('intro').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+    return;
+  }
+  cur=si;
+  document.getElementById('intro').style.display='none';
+  document.getElementById('pb').style.display='block';
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.getElementById('s'+si).classList.add('on');
+  const p=Math.round((si/D.length)*100);
+  document.getElementById('pF').style.width=p+'%';
+  document.getElementById('pP').textContent=p+'%';
+  document.getElementById('pS').textContent=`Раздел ${si+1} из ${D.length}`;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function nx(si){if(val(si))go(si+1)}
+
+function fin(){
+  if(!val(cur))return;
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.getElementById('pF').style.width='100%';
+  document.getElementById('pP').textContent='100%';
+  document.getElementById('pS').textContent='Готово!';
+  showR();
+}
+
+function showR(){
+  const r=document.getElementById('R');
+  r.classList.add('on');
+
+  let txt='══════════════════════════════════════\n';
+  txt+='       РЕЗУЛЬТАТЫ ОПРОСА\n';
+  txt+='══════════════════════════════════════\n';
+  txt+=`Дата: ${new Date().toLocaleString('ru-RU')}\n`;
+  txt+=`ID респондента: ${Math.random().toString(36).substring(2,10).toUpperCase()}\n\n`;
+
+  D.forEach(s=>{
+    txt+=`── ${s.t.toUpperCase()} ──\n\n`;
+    s.q.forEach(q=>{
+      let v=A[q.id];
+      if(v===undefined||v===''||(Array.isArray(v)&&!v.length))return;
+      const d=Array.isArray(v)?v.join('; '):(typeof v==='number'?v+' из 10':v);
+      txt+=`Вопрос: ${q.l}\nОтвет: ${d}\n`;
+      if(C[q.id])txt+=`Свой вариант: ${C[q.id]}\n`;
+      txt+='\n';
+    });
+  });
+
+  txt+='══════════════════════════════════════\n';
+
+  let h=`<div class="rc" style="text-align:center"><h3 style="font-size:20px;margin-bottom:5px">Спасибо за ваши ответы!</h3><p style="color:var(--t2);font-size:13px">Вы помогаете создать продукт, который реально нужен людям.</p></div>`;
+
+  h+=`<div class="rc"><h3>Сводка ваших ответов</h3>`;
+  D.forEach(s=>{
+    s.q.forEach(q=>{
+      let v=A[q.id];
+      if(v===undefined||v===''||(Array.isArray(v)&&!v.length))return;
+      let d=Array.isArray(v)?v.join(', '):(typeof v==='number'?v+'/10':v);
+      if(C[q.id])d+=' + «'+C[q.id]+'»';
+      const sh=typeof d==='string'&&d.length>90?d.slice(0,90)+'…':d;
+      const lb=q.l.length>50?q.l.slice(0,50)+'…':q.l;
+      h+=`<div class="rr"><span class="rk">${lb}</span><span class="rv">${sh}</span></div>`;
+    });
+  });
+  h+=`</div>`;
+  h+=`<button class="cpb" id="cpB" onclick="cp()">📋 Скопировать все ответы</button>`;
+
+  r.innerHTML=h;
+  window._t=txt;
+}
+
+function cp(){
+  const b=document.getElementById('cpB');
+  const ok=()=>{b.textContent='✅ Скопировано!';b.classList.add('ok');setTimeout(()=>{b.textContent='📋 Скопировать все ответы';b.classList.remove('ok')},2500)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(window._t).then(ok).catch(fb);
+  } else fb();
+  function fb(){
+    const ta=document.createElement('textarea');
+    ta.value=window._t;
+    ta.style.cssText='position:fixed;left:-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try{document.execCommand('copy');ok()}catch(e){
+      prompt('Скопируйте текст вручную (Ctrl+C):',window._t);
+    }
+    document.body.removeChild(ta);
+  }
+}
+
+init();
+</script>
+</body>
+</html>
